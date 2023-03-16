@@ -43,5 +43,13 @@ async def device_to_detect():
                 
                 return("Scan exit")            
     return None
+
+async def device_rssi_print():
+    while True:
+        async with aioble.scan(5000, interval_us=30000, window_us=30000, active=True) as scanner:
+            async for result in scanner:
+                if binascii.hexlify(result.device.addr, ":").decode() == deviceAddress:
+                        print("Object found : " + result.name() + " ///// RSSI: " + result.rssi)
+                
     
-asyncio.run(device_to_detect())
+asyncio.run(device_rssi_print())
