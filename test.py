@@ -12,7 +12,7 @@ async def calibration(deviceAdress):
     distances = [5, 10, 20]
     measures = []
     for distance in distances:
-        input("Déplacez-vous à " + distance + "m de l'appareil")
+        print("Déplacez-vous à " + distance + "m de l'appareil")
         rssi_values = []
         char = input("Tapez 'ok' lorsque vous êtes prêt.")
         if (char != "ok"):
