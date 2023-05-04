@@ -7,6 +7,27 @@ async def main():
     #On mettre ici le programme principal de notre code final
     return None
 
+#Calibration for the distance
+async def calibration(deviceAdress):
+    distances = [5, 10, 20]
+    measures = []
+    for distance in distances:
+        input("Déplacez-vous à " + distance + "m de l'appareil")
+        rssi_values = []
+        char = input("Tapez 'ok' lorsque vous êtes prêt.")
+        if (char != "ok"):
+            print("Erreur de saisie")
+        else:
+            # Scan for 5 second and add the average RSSI value to the list
+            async with aioble.scan(5000, interval_us=30000, window_us=30000, active=True) as scanner:
+                async for result in scanner:
+                    if binascii.hexlify(result.device.addr, ":").decode() == deviceAdress:
+                        rssi_values.append(result.rssi)
+            avg_rssi = sum(rssi_values) / len(rssi_values)
+            measures.append((distance, avg_rssi))
+        print("Distance: "+ distance +"m / RSSI: " + avg_rssi)
+    return measures
+
 #Scan BLE devices around         
 async def scan_around():
      while True: 
