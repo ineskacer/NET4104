@@ -17,6 +17,8 @@ async def calibration(deviceAdress):
         char = input("Tapez 'ok' lorsque vous êtes prêt.")
         if (char != "ok"):
             print("Erreur de saisie")
+            print("Veuillez recommencer la calibration")
+            return None
         else:
             # Scan for 5 second and add the average RSSI value to the list
             async with aioble.scan(5000, interval_us=30000, window_us=30000, active=True) as scanner:
